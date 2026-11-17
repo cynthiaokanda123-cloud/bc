@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brenda &amp; Chalton — Wedding Ceremony &amp; Developer Showcase</title>
+  <meta name="description" content="Wedding ceremony announcement banner for Brenda & Chalton, paired with a software developer and web designer portfolio showcase." />
+  <meta property="og:title" content="Brenda & Chalton — Wedding Ceremony Announcement" />
+  <meta property="og:description" content="Together with their families, Brenda & Chalton invite you to celebrate their wedding ceremony. Designed and built as a responsive digital showcase." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Fonts: Great Vibes (Script), Playfair Display (Editorial Serif), Plus Jakarta Sans (UI/Body), JetBrains Mono (Tabular Numerals) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 & Devicon via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css" />
+
+  <!-- html2canvas for 1-click Banner PNG Export -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    /* =========================================================================
+       1. DESIGN TOKENS & COLOR PALETTE (Easy to customize)
+       ========================================================================= */
+    :root {
+      /* Requested Core Palette */
+      --blue-deep: #1E3A8A;
+      --blue-electric: #2563EB;
+      --purple-royal: #7C3AED;
+      --pink-romance: #EC4899;
+      --gold-sunny: #FACC15;
+      --gold-warm: #F59E0B;
+      --green-fresh: #22C55E;
+      --green-deep: #16A34A;
+      --white: #FFFFFF;
+
+      /* High-Contrast Glass & Surface Tokens */
+      --surface-dark: rgba(12, 20, 56, 0.56);
+      --glass-bg: rgba(255, 255, 255, 0.10);
+      --glass-bg-strong: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.24);
+      --glass-highlight: rgba(255, 255, 255, 0.42);
+      --text-primary: #FFFFFF;
+      --text-secondary: #E2E8F0;
+      --text-muted: #CBD5E1;
+
+      /* Typography */
+      --font-script: 'Great Vibes', cursive;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+      /* Spacing & Radii */
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* =========================================================================
+       2. RESET & BASE LAYOUT
+       ========================================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background-color: var(--blue-deep);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 2vw, 28px);
+    }
+
+    /* Flowing Animated Gradient Canvas */
+    .bg-gradient-flow {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: linear-gradient(
+        125deg,
+        var(--blue-deep) 0%,
+        var(--blue-electric) 26%,
+        var(--purple-royal) 56%,
+        var(--pink-romance) 84%,
+        var(--blue-deep) 100%
+      );
+      background-size: 320% 320%;
+      animation: gradientFlow 18s ease infinite;
+    }
+
+    /* Soft Ambient Glow Orbs */
+    .bg-ambient-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 14% 22%, rgba(250, 204, 21, 0.18), transparent 42%),
+        radial-gradient(circle at 86% 78%, rgba(34, 197, 94, 0.16), transparent 44%),
+        radial-gradient(circle at 52% 48%, rgba(236, 72, 153, 0.18), transparent 50%);
+    }
+
+    /* Particle Canvas Layer (Hearts, Petals, Stars, Confetti) */
+    #celebration-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Accessible Focus Ring */
+    :focus-visible {
+      outline: 3px solid var(--gold-sunny);
+      outline-offset: 3px;
+    }
+
+    /* =========================================================================
+       3. TOP ACTION TOOLBAR (Export PNG & Share)
+       ========================================================================= */
+    .banner-actions-bar {
+      width: 100%;
+      max-width: 1920px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 20;
+      flex-wrap: wrap;
+    }
+
+    .banner-brand-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(15, 23, 42, 0.48);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      padding: 8px 16px;
+      border-radius: 999px;
+    }
+
+    .banner-brand-note i {
+      color: var(--gold-sunny);
+    }
+
+    .toolbar-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: rgba(15, 23, 42, 0.56);
+      color: var(--white);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.2s var(--ease-out-expo), background-color 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(30, 58, 138, 0.82);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .action-btn--gold {
+      background: linear-gradient(135deg, var(--gold-sunny), var(--gold-warm));
+      color: #0F172A;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .action-btn--gold:hover {
+      background: linear-gradient(135deg, #FEF08A, var(--gold-sunny));
+    }
+
+    .action-btn:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* =========================================================================
+       4. MASTER HERO BANNER STAGE (1920x1080 Base, Fluidly Responsive)
+       ========================================================================= */
+    .banner-stage {
+      width: 100%;
+      max-width: 1920px;
+      min-height: min(980px, calc(100vh - 96px));
+      position: relative;
+      z-index: 10;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--glass-border);
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.52) 0%,
+        rgba(30, 58, 138, 0.42) 38%,
+        rgba(124, 58, 237, 0.36) 72%,
+        rgba(236, 72, 153, 0.34) 100%
+      );
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow:
+        0 28px 70px rgba(8, 13, 40, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.03fr 0.97fr;
+      align-items: stretch;
+    }
+
+    /* Subtle Decorative Corner Sparkles Inside Banner */
+    .banner-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 6% 10%, rgba(250, 204, 21, 0.14), transparent 28%),
+        radial-gradient(circle at 94% 90%, rgba(34, 197, 94, 0.14), transparent 32%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =========================================================================
+       5. CURVED SHIMMER DIVIDER BETWEEN ZONES
+       ========================================================================= */
+    .zone-divider-desktop {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 92px;
+      transform: translateX(-42%);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .zone-divider-desktop svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .divider-shimmer-path {
+      stroke-dasharray: 180 600;
+      animation: shimmerTrace 5s linear infinite;
+    }
+
+    .zone-divider-mobile {
+      display: none;
+      width: 100%;
+      height: 44px;
+      position: relative;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .zone-divider-mobile svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* =========================================================================
+       6. LEFT / TOP ZONE — WEDDING ANNOUNCEMENT
+       ========================================================================= */
+    .wedding-zone {
+      position: relative;
+      z-index: 2;
+      padding: clamp(24px, 3vw, 48px) clamp(24px, 3.6vw, 56px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: clamp(18px, 2vw, 28px);
+      background: radial-gradient(circle at 24% 32%, rgba(236, 72, 153, 0.16), transparent 64%);
+    }
+
+    .wedding-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .wedding-tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+      color: #FEF08A;
+      letter-spacing: 0.03em;
+      text-shadow: 0 2px 12px rgba(250, 204, 21, 0.35);
+    }
+
+    .wedding-tagline i {
+      color: var(--pink-romance);
+      filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.7));
+    }
+
+    .wedding-festive-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1.05rem;
+    }
+
+    .icon-glow-gold {
+      background: linear-gradient(135deg, #FEF08A, var(--gold-sunny), var(--gold-warm));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.45));
+    }
+
+    .icon-glow-pink {
+      background: linear-gradient(135deg, #F9A8D4, var(--pink-romance), var(--purple-royal));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.45));
+    }
+
+    /* Wedding Hero Block: Portrait + Headline */
+    .wedding-hero-cluster {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: clamp(20px, 2.5vw, 38px);
+    }
+
+    /* Couple Portrait Frame (Floating + Rotating Gradient Ring + Heart Badge) */
+    .portrait-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: floatGentle 5.5s ease-in-out infinite;
+    }
+
+    .portrait-ring {
+      position: relative;
+      width: clamp(190px, 16vw, 250px);
+      height: clamp(220px, 19vw, 290px);
+      padding: 5px;
+      border-radius: 140px 140px 36px 36px;
+      background: linear-gradient(135deg, var(--pink-romance), var(--purple-royal), var(--blue-electric), var(--gold-sunny));
+      background-size: 260% 260%;
+      animation: ringShimmer 6s ease infinite, ringPulseGlow 3.6s ease-in-out infinite;
+      box-shadow:
+        0 18px 42px rgba(236, 72, 153, 0.36),
+        0 0 36px rgba(124, 58, 237, 0.4);
+    }
+
+    .portrait-ring::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 148px 148px 42px 42px;
+      background: conic-gradient(
+        from 0deg,
+        var(--pink-romance),
+        var(--purple-royal),
+        var(--blue-electric),
+        var(--gold-sunny),
+        var(--pink-romance)
+      );
+      z-index: -1;
+      opacity: 0.72;
+      filter: blur(8px);
+      animation: spinSlow 9s linear infinite;
+    }
+
+    .portrait-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 135px 135px 31px 31px;
+      overflow: hidden;
+      background: linear-gradient(160deg, #1E3A8A, #4C1D95);
+      position: relative;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .portrait-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portrait-heart-badge {
+      position: absolute;
+      bottom: 8px;
+      right: -8px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-romance), var(--purple-royal));
+      border: 2.5px solid var(--white);
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      font-size: 1.05rem;
+      box-shadow: 0 8px 20px rgba(236, 72, 153, 0.55);
+      animation: heartbeat 2.4s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    .portrait-upload-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .upload-photo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      min-height: 40px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s var(--ease-out-expo);
+      white-space: nowrap;
+    }
+
+    .upload-photo-btn:hover {
+      background: rgba(236, 72, 153, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .upload-photo-btn i {
+      color: var(--gold-sunny);
+    }
+
+    .reset-photo-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .reset-photo-btn.visible {
+      display: inline-flex;
+    }
+
+    .reset-photo-btn:hover {
+      background: rgba(236, 72, 153, 0.45);
+      color: var(--white);
+    }
+
+    #couple-photo-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    /* Couple Names & Shimmer Headline */
+    .wedding-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .couple-headline {
+      font-family: var(--font-script);
+      font-size: clamp(2.8rem, 4.4vw, 4.9rem);
+      font-weight: 400;
+      line-height: 1.12;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      position: relative;
+      text-wrap: balance;
+    }
+
+    .couple-name-word {
+      display: inline-flex;
+      position: relative;
+      filter: drop-shadow(0 4px 18px rgba(250, 204, 21, 0.42));
+    }
+
+    .couple-name-letter {
+      display: inline-block;
+      background: linear-gradient(
+        110deg,
+        #FEF08A 0%,
+        var(--gold-sunny) 32%,
+        #FFFFFF 50%,
+        var(--gold-warm) 68%,
+        var(--gold-sunny) 100%
+      );
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform: translateY(14px) scale(0.94);
+      animation:
+        letterReveal 0.65s var(--ease-out-expo) forwards,
+        goldShimmerSweep 4.8s linear infinite;
+    }
+
+    /* Interlocking Rings & Heart Connector Between Names */
+    .names-connector {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 52px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+
+    .names-connector svg {
+      width: 50px;
+      height: 40px;
+      filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.6));
+      animation: floatGentle 3.5s ease-in-out infinite;
+    }
+
+    .wedding-subheading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.05rem, 1.4vw, 1.38rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+
+    /* Ceremony Details Glass Card */
+    .ceremony-details-card {
+      background: rgba(15, 23, 42, 0.42);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s ease;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .detail-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.28), rgba(124, 58, 237, 0.35));
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 0.95rem;
+    }
+
+    .detail-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #FDE68A;
+      margin-bottom: 2px;
+    }
+
+    .detail-value {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--white);
+      word-break: break-word;
+    }
+
+    /* Countdown Timer Glass Cards */
+    .countdown-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .countdown-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .countdown-caption i {
+      color: var(--gold-sunny);
+      margin-right: 6px;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(8px, 1.2vw, 14px);
+    }
+
+    .countdown-card {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.06));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 14px 10px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.25);
+      transition: transform 0.2s var(--ease-out-expo), border-color 0.2s ease;
+    }
+
+    .countdown-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold-sunny);
+    }
+
+    .countdown-digit {
+      display: block;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(1.45rem, 2.2vw, 2.25rem);
+      font-weight: 700;
+      color: var(--gold-sunny);
+      line-height: 1.1;
+      text-shadow: 0 2px 14px rgba(250, 204, 21, 0.4);
+    }
+
+    .countdown-digit.digit-tick {
+      animation: digitFlipBounce 0.42s var(--ease-out-expo);
+    }
+
+    .countdown-unit {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    /* =========================================================================
+       7. RIGHT / BOTTOM ZONE — DEVELOPER PROFILE & SHOWCASE
+       ========================================================================= */
+    .developer-zone {
+      position: relative;
+      z-index: 2;
+      padding: clamp(24px, 3vw, 48px) clamp(24px, 3.6vw, 54px) clamp(24px, 3vw, 48px) clamp(32px, 4vw, 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: clamp(14px, 1.6vw, 22px);
+      background: radial-gradient(circle at 82% 20%, rgba(37, 99, 235, 0.22), transparent 60%);
+    }
+
+    /* Developer Identity Header */
+    .dev-header-card {
+      background: rgba(15, 23, 42, 0.44);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.25s var(--ease-out-expo);
+    }
+
+    .dev-kicker-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .dev-role-typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--green-fresh);
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.05em;
+      background-color: var(--gold-sunny);
+      animation: blinkCursor 0.9s step-end infinite;
+    }
+
+    .dev-craft-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .dev-name-heading {
+      font-size: clamp(1.35rem, 2vw, 1.9rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .dev-subtitle {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #FDE047;
+      margin-bottom: 8px;
+    }
+
+    .dev-pitch {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      max-width: 65ch;
+    }
+
+    /* Skills & Tech Stack Matrix */
+    .skills-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .section-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .section-title i {
+      color: var(--gold-sunny);
+    }
+
+    .skills-categories {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .skill-group {
+      background: rgba(15, 23, 42, 0.36);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .skill-group--full {
+      grid-column: 1 / -1;
+    }
+
+    .skill-group-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #93C5FD;
+      margin-bottom: 8px;
+    }
+
+    .skill-chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .skill-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+      transition:
+        transform 0.2s var(--ease-out-expo),
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .skill-chip.is-visible {
+      animation: chipPopIn 0.45s var(--ease-out-expo) forwards;
+    }
+
+    .skill-chip:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: rgba(37, 99, 235, 0.45);
+      border-color: var(--gold-sunny);
+      box-shadow: 0 6px 18px rgba(250, 204, 21, 0.25);
+    }
+
+    .skill-chip i {
+      font-size: 0.92rem;
+    }
+
+    /* Animated Skill Proficiency Rings + Bars */
+    .proficiency-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .ring-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+    }
+
+    .ring-svg-wrap {
+      position: relative;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+    }
+
+    .ring-svg {
+      width: 58px;
+      height: 58px;
+      transform: rotate(-90deg);
+    }
+
+    .ring-track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.14);
+      stroke-width: 5;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 150.8;
+      stroke-dashoffset: 150.8;
+      transition: stroke-dashoffset 1.3s var(--ease-out-expo);
+    }
+
+    .ring-pct {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .ring-label {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.25;
+    }
+
+    .skill-bar-mini {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green-fresh), var(--gold-sunny));
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 1.2s var(--ease-out-expo);
+    }
+
+    /* Contact & CTA Footer Block */
+    .contact-cta-card {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .contact-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      flex: 1 1 320px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 600;
+      min-height: 36px;
+      transition: color 0.2s ease, transform 0.2s var(--ease-out-expo);
+      word-break: break-word;
+    }
+
+    .contact-link:hover {
+      color: var(--gold-sunny);
+      transform: translateX(2px);
+    }
+
+    .contact-link i {
+      width: 18px;
+      text-align: center;
+      font-size: 0.98rem;
+      flex-shrink: 0;
+    }
+
+    .icon-bounce-phone {
+      color: var(--gold-sunny);
+      animation: iconGentleBounce 2.2s ease-in-out infinite;
+    }
+
+    .icon-bounce-wa {
+      color: var(--green-fresh);
+      animation: iconGentleBounce 2.2s ease-in-out 0.35s infinite;
+    }
+
+    .social-and-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .social-links-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .social-icon-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: transform 0.2s var(--ease-out-expo), background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .social-icon-link:hover {
+      transform: translateY(-3px);
+      background: var(--blue-electric);
+      border-color: var(--gold-sunny);
+    }
+
+    .cta-buttons-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cta-primary-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 11px 22px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--green-fresh), var(--green-deep));
+      color: #052E16;
+      font-weight: 800;
+      font-size: 0.92rem;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.65);
+      animation: ctaPulse 2.4s infinite;
+      transition: transform 0.2s var(--ease-out-expo), filter 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .cta-primary-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      filter: brightness(1.08);
+    }
+
+    .cta-secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 11px 18px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: transform 0.2s var(--ease-out-expo), background-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .cta-secondary-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    /* Subtle Parallax Card Tilt Hook */
+    .tilt-card {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    /* Toast Notification */
+    .toast-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(24px);
+      background: rgba(15, 23, 42, 0.94);
+      color: var(--white);
+      border: 1px solid var(--gold-sunny);
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+      transition: opacity 0.25s ease, transform 0.25s var(--ease-out-expo);
+    }
+
+    .toast-banner.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* =========================================================================
+       8. SNAPSHOT EXPORT HELPER CLASS (Clean html2canvas PNG Capture)
+       ========================================================================= */
+    .banner-stage.exporting-snapshot,
+    .banner-stage.exporting-snapshot * {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .banner-stage.exporting-snapshot {
+      background: linear-gradient(135deg, #1E3A8A 0%, #4C1D95 52%, #BE185D 100%) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    .banner-stage.exporting-snapshot .couple-name-letter {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: #FACC15 !important;
+      color: #FACC15 !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .banner-stage.exporting-snapshot .icon-glow-gold {
+      background: none !important;
+      -webkit-text-fill-color: #FACC15 !important;
+      color: #FACC15 !important;
+    }
+
+    .banner-stage.exporting-snapshot .icon-glow-pink {
+      background: none !important;
+      -webkit-text-fill-color: #EC4899 !important;
+      color: #EC4899 !important;
+    }
+
+    /* =========================================================================
+       9. KEYFRAME ANIMATIONS (GPU-Composited)
+       ========================================================================= */
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-9px); }
+    }
+
+    @keyframes ringShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes ringPulseGlow {
+      0%, 100% {
+        box-shadow: 0 18px 42px rgba(236, 72, 153, 0.36), 0 0 28px rgba(124, 58, 237, 0.38);
+      }
+      50% {
+        box-shadow: 0 22px 54px rgba(236, 72, 153, 0.58), 0 0 44px rgba(250, 204, 21, 0.42);
+      }
+    }
+
+    @keyframes spinSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.16); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.12); }
+      70% { transform: scale(1); }
+    }
+
+    @keyframes letterReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes goldShimmerSweep {
+      0% { background-position: 0% center; }
+      100% { background-position: 220% center; }
+    }
+
+    @keyframes shimmerTrace {
+      0% { stroke-dashoffset: 780; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes digitFlipBounce {
+      0% { transform: translateY(-6px) scale(0.92); opacity: 0.6; }
+      55% { transform: translateY(2px) scale(1.07); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    @keyframes chipPopIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes blinkCursor {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    @keyframes iconGentleBounce {
+      0%, 100% { transform: translateY(0); }
+      45% { transform: translateY(-4px); }
+      70% { transform: translateY(1px); }
+    }
+
+    @keyframes ctaPulse {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.62); }
+      70% { box-shadow: 0 0 0 13px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    /* =========================================================================
+       10. RESPONSIVE BREAKPOINTS (Tablet & Mobile Stacked Layout)
+       ========================================================================= */
+    @media (max-width: 1240px) {
+      .wedding-hero-cluster {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+      }
+
+      .couple-headline {
+        justify-content: center;
+      }
+
+      .ceremony-details-card {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-categories {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1023px) {
+      .banner-stage {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .zone-divider-desktop {
+        display: none;
+      }
+
+      .zone-divider-mobile {
+        display: block;
+      }
+
+      .developer-zone {
+        padding: clamp(22px, 4vw, 36px);
+      }
+
+      .ceremony-details-card {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .skills-categories {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .social-and-cta {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 10px;
+      }
+
+      .banner-actions-bar {
+        justify-content: center;
+      }
+
+      .ceremony-details-card {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-categories {
+        grid-template-columns: 1fr;
+      }
+
+      .proficiency-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .contact-details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons-row {
+        width: 100%;
+      }
+
+      .cta-primary-btn,
+      .cta-secondary-btn {
+        flex: 1 1 auto;
+      }
+    }
+
+    /* =========================================================================
+       11. ACCESSIBILITY: PREFERS-REDUCED-MOTION
+       ========================================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      #celebration-canvas {
+        display: none !important;
+      }
+
+      .couple-name-letter,
+      .skill-chip {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Flowing Animated Background Layers -->
+  <div class="bg-gradient-flow" aria-hidden="true"></div>
+  <div class="bg-ambient-orbs" aria-hidden="true"></div>
+  <canvas id="celebration-canvas" aria-hidden="true"></canvas>
+
+  <!-- Top Utility Actions (Ignored during PNG Image Export) -->
+  <header class="banner-actions-bar" data-html2canvas-ignore="true">
+    <div class="banner-brand-note">
+      <i class="fa-solid fa-ring" aria-hidden="true"></i>
+      <i class="fa-solid fa-heart" aria-hidden="true"></i>
+      <span>Wedding Announcement &amp; Developer Showcase</span>
+    </div>
+    <div class="toolbar-buttons">
+      <button type="button" id="download-banner-btn" class="action-btn action-btn--gold" aria-label="Download wedding banner as PNG image">
+        <i class="fa-solid fa-download" aria-hidden="true"></i>
+        <span>Download as Image</span>
+      </button>
+      <button type="button" id="share-banner-btn" class="action-btn" aria-label="Share wedding announcement link">
+        <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+        <span>Share</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN HERO BANNER STAGE (1920x1080 Base, Scales Down to Mobile)
+       ========================================================================= -->
+  <main id="wedding-banner-stage" class="banner-stage" aria-label="Brenda and Chalton Wedding Announcement and Developer Showcase">
+
+    <!-- Curved Shimmer Divider (Desktop Vertical Wave) -->
+    <div class="zone-divider-desktop" aria-hidden="true">
+      <svg viewBox="0 0 100 1000" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="dividerGradV" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#EC4899" stop-opacity="0.25" />
+            <stop offset="50%" stop-color="#FACC15" stop-opacity="0.7" />
+            <stop offset="100%" stop-color="#22C55E" stop-opacity="0.3" />
+          </linearGradient>
+          <linearGradient id="shimmerGradV" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0" />
+            <stop offset="50%" stop-color="#FEF08A" stop-opacity="1" />
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M52,0 C88,240 14,430 52,650 C82,820 26,910 52,1000" fill="none" stroke="url(#dividerGradV)" stroke-width="2.5" />
+        <path class="divider-shimmer-path" d="M52,0 C88,240 14,430 52,650 C82,820 26,910 52,1000" fill="none" stroke="url(#shimmerGradV)" stroke-width="4" stroke-linecap="round" />
+      </svg>
+    </div>
+
+    <!-- =======================================================================
+         LEFT / TOP ZONE: WEDDING CEREMONY ANNOUNCEMENT
+         ======================================================================= -->
+    <section class="wedding-zone" aria-labelledby="couple-names-heading">
+      <!-- Top Row: Tagline & Celebratory Icons -->
+      <div class="wedding-top-bar">
+        <p class="wedding-tagline">
+          <i class="fa-solid fa-spa" aria-hidden="true"></i>
+          <span>Together with their families</span>
+        </p>
+        <div class="wedding-festive-icons" aria-hidden="true">
+          <i class="fa-solid fa-bell icon-glow-gold" title="Wedding Bells"></i>
+          <i class="fa-solid fa-champagne-glasses icon-glow-pink" title="Celebration"></i>
+          <i class="fa-solid fa-heart icon-glow-pink" title="Love"></i>
+        </div>
+      </div>
+
+      <!-- Center-Left Hero: Floating Portrait + Animated Couple Names -->
+      <div class="wedding-hero-cluster">
+        <!-- Couple Portrait Frame -->
+        <div class="portrait-wrapper">
+          <div class="portrait-ring">
+            <div class="portrait-inner">
+              <!-- Self-contained illustrated couple placeholder; replaced instantly when user uploads a photo -->
+              <img
+                id="couple-portrait-img"
+                alt="Portrait of Brenda and Chalton celebrating their upcoming wedding ceremony"
+                referrerPolicy="no-referrer"
+                src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 460'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231E3A8A'/%3E%3Cstop offset='52%25' stop-color='%237C3AED'/%3E%3Cstop offset='100%25' stop-color='%23EC4899'/%3E%3C/linearGradient%3E%3ClinearGradient id='gold' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FEF08A'/%3E%3Cstop offset='100%25' stop-color='%23FACC15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='460' fill='url(%23bg)'/%3E%3Ccircle cx='200' cy='165' r='128' fill='rgba(255,255,255,0.09)'/%3E%3Ccircle cx='200' cy='165' r='96' fill='rgba(250,204,21,0.14)'/%3E%3Cpath d='M55 430 Q200 250 345 430' fill='none' stroke='url(%23gold)' stroke-width='3' opacity='0.65'/%3E%3Cg fill='%23FFFFFF' opacity='0.94'%3E%3Ccircle cx='155' cy='180' r='34'/%3E%3Cpath d='M92 375 C95 270 120 232 155 232 C190 232 215 270 218 375 Z'/%3E%3Ccircle cx='246' cy='192' r='32'/%3E%3Cpath d='M185 375 C188 282 212 246 246 246 C280 246 306 282 312 375 Z'/%3E%3C/g%3E%3Cpath d='M200 126 C192 114 174 116 174 132 C174 148 200 164 200 164 C200 164 226 148 226 132 C226 116 208 114 200 126 Z' fill='url(%23gold)'/%3E%3Ctext x='200' y='418' text-anchor='middle' font-family='Georgia,serif' font-size='22' fill='%23FEF08A' font-style='italic'%3EBrenda %26 Chalton%3C/text%3E%3C/svg%3E"
+              />
+            </div>
+            <div class="portrait-heart-badge" aria-hidden="true">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+          </div>
+
+          <div class="portrait-upload-controls" data-html2canvas-ignore="true">
+            <label for="couple-photo-input" class="upload-photo-btn">
+              <i class="fa-solid fa-camera" aria-hidden="true"></i>
+              <span>Upload Couple Photo</span>
+            </label>
+            <button type="button" id="reset-photo-btn" class="reset-photo-btn" title="Restore placeholder illustration" aria-label="Restore placeholder illustration">
+              <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+            </button>
+            <input type="file" id="couple-photo-input" accept="image/*" aria-label="Upload couple portrait photo" />
+          </div>
+        </div>
+
+        <!-- Names, Rings Connector, and Subheading -->
+        <div class="wedding-titles">
+          <h1 id="couple-names-heading" class="couple-headline" aria-label="Brenda and Chalton">
+            <span class="couple-name-word" data-animate-name="Brenda">Brenda</span>
+            <span class="names-connector" aria-hidden="true" title="Interlocking Wedding Rings">
+              <svg viewBox="0 0 64 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="27" r="13" stroke="#FACC15" stroke-width="3.4" />
+                <circle cx="40" cy="27" r="13" stroke="#FEF08A" stroke-width="3.4" />
+                <path d="M32 10C30.4 7.5 26.8 7.8 26.8 11C26.8 14.3 32 18 32 18C32 18 37.2 14.3 37.2 11C37.2 7.8 33.6 7.5 32 10Z" fill="#EC4899" />
+              </svg>
+            </span>
+            <span class="couple-name-word" data-animate-name="Chalton">Chalton</span>
+          </h1>
+          <p class="wedding-subheading">Invite you to celebrate their Wedding Ceremony</p>
+        </div>
+      </div>
+
+      <!-- Date, Time & Venue Glass Card -->
+      <div class="ceremony-details-card tilt-card" aria-label="Ceremony Date, Time, and Venue">
+        <div class="detail-item">
+          <div class="detail-icon-box" aria-hidden="true">
+            <i class="fa-regular fa-calendar-days icon-glow-gold"></i>
+          </div>
+          <div>
+            <span class="detail-label">Ceremony Date</span>
+            <span class="detail-value">[DATE]</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon-box" aria-hidden="true">
+            <i class="fa-regular fa-clock icon-glow-pink"></i>
+          </div>
+          <div>
+            <span class="detail-label">Ceremony Time</span>
+            <span class="detail-value">[TIME]</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon-box" aria-hidden="true">
+            <i class="fa-solid fa-location-dot icon-glow-gold"></i>
+          </div>
+          <div>
+            <span class="detail-label">Venue Location</span>
+            <span class="detail-value">[VENUE]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown Timer -->
+      <section class="countdown-section" aria-label="Countdown to Wedding Ceremony">
+        <div class="countdown-caption">
+          <span><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>Counting down to the big day</span>
+          <span id="countdown-status-note">Target: [WEDDING DATE AND TIME]</span>
+        </div>
+
+        <div class="countdown-grid" role="timer" aria-live="off">
+          <div class="countdown-card">
+            <span id="cd-days" class="countdown-digit">00</span>
+            <span class="countdown-unit">Days</span>
+          </div>
+          <div class="countdown-card">
+            <span id="cd-hours" class="countdown-digit">00</span>
+            <span class="countdown-unit">Hours</span>
+          </div>
+          <div class="countdown-card">
+            <span id="cd-minutes" class="countdown-digit">00</span>
+            <span class="countdown-unit">Minutes</span>
+          </div>
+          <div class="countdown-card">
+            <span id="cd-seconds" class="countdown-digit">00</span>
+            <span class="countdown-unit">Seconds</span>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Curved Shimmer Divider (Mobile / Tablet Horizontal Wave) -->
+    <div class="zone-divider-mobile" aria-hidden="true">
+      <svg viewBox="0 0 1000 60" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="dividerGradH" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#EC4899" stop-opacity="0.3" />
+            <stop offset="50%" stop-color="#FACC15" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#22C55E" stop-opacity="0.35" />
+          </linearGradient>
+        </defs>
+        <path d="M0,30 C250,5 450,55 700,25 C840,10 920,42 1000,30" fill="none" stroke="url(#dividerGradH)" stroke-width="3" />
+      </svg>
+    </div>
+
+    <!-- =======================================================================
+         RIGHT / BOTTOM ZONE: DEVELOPER PROFILE, SKILLS & CONTACT
+         ======================================================================= -->
+    <section class="developer-zone" aria-labelledby="developer-profile-heading">
+      <!-- Developer Intro Card -->
+      <div class="dev-header-card tilt-card">
+        <div class="dev-kicker-row">
+          <div class="dev-role-typing" aria-label="Dynamic role">
+            <i class="fa-solid fa-code" aria-hidden="true"></i>
+            <span id="typed-role-text">Software Developer</span><span class="typing-cursor" aria-hidden="true"></span>
+          </div>
+          <div class="dev-craft-icons" aria-hidden="true">
+            <i class="fa-solid fa-laptop-code icon-glow-gold" title="Full-Stack Engineering"></i>
+            <i class="fa-solid fa-gear icon-glow-pink" title="Scalable Systems"></i>
+            <i class="fa-solid fa-rocket icon-glow-gold" title="Modern Web Launches"></i>
+          </div>
+        </div>
+
+        <h2 id="developer-profile-heading" class="dev-name-heading">[YOUR FULL NAME]</h2>
+        <p class="dev-subtitle">Software Developer | Web Designer</p>
+        <p class="dev-pitch">
+          I build scalable systems, beautiful websites and modern digital experiences. Need a website, an app or a digital invite? Let&rsquo;s talk.
+        </p>
+      </div>
+
+      <!-- Tech Stack & Services Chips -->
+      <div class="skills-panel" aria-label="Technical Skills and Services">
+        <div class="section-heading-row">
+          <h3 class="section-title">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            <span>Tech Stack &amp; Capabilities</span>
+          </h3>
+        </div>
+
+        <div class="skills-categories">
+          <!-- Frontend -->
+          <div class="skill-group">
+            <div class="skill-group-label">
+              <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+              <span>Frontend</span>
+            </div>
+            <div class="skill-chips-wrap">
+              <span class="skill-chip"><i class="devicon-html5-plain colored" aria-hidden="true"></i>HTML5</span>
+              <span class="skill-chip"><i class="devicon-css3-plain colored" aria-hidden="true"></i>CSS3</span>
+              <span class="skill-chip"><i class="devicon-javascript-plain colored" aria-hidden="true"></i>JavaScript</span>
+              <span class="skill-chip"><i class="devicon-typescript-plain colored" aria-hidden="true"></i>TypeScript</span>
+              <span class="skill-chip"><i class="devicon-react-original colored" aria-hidden="true"></i>React</span>
+              <span class="skill-chip"><i class="devicon-tailwindcss-original colored" aria-hidden="true"></i>Tailwind CSS</span>
+            </div>
+          </div>
+
+          <!-- Backend -->
+          <div class="skill-group">
+            <div class="skill-group-label">
+              <i class="fa-solid fa-server" aria-hidden="true"></i>
+              <span>Backend</span>
+            </div>
+            <div class="skill-chips-wrap">
+              <span class="skill-chip"><i class="devicon-nodejs-plain colored" aria-hidden="true"></i>Node.js</span>
+              <span class="skill-chip"><i class="devicon-python-plain colored" aria-hidden="true"></i>Python</span>
+              <span class="skill-chip"><i class="fa-solid fa-plug icon-glow-gold" aria-hidden="true"></i>REST APIs</span>
+              <span class="skill-chip"><i class="devicon-php-plain colored" aria-hidden="true"></i>PHP</span>
+            </div>
+          </div>
+
+          <!-- Databases -->
+          <div class="skill-group">
+            <div class="skill-group-label">
+              <i class="fa-solid fa-database" aria-hidden="true"></i>
+              <span>Databases</span>
+            </div>
+            <div class="skill-chips-wrap">
+              <span class="skill-chip"><i class="devicon-mysql-original colored" aria-hidden="true"></i>MySQL</span>
+              <span class="skill-chip"><i class="devicon-mongodb-plain colored" aria-hidden="true"></i>MongoDB</span>
+              <span class="skill-chip"><i class="devicon-firebase-plain colored" aria-hidden="true"></i>Firebase</span>
+            </div>
+          </div>
+
+          <!-- Tools -->
+          <div class="skill-group">
+            <div class="skill-group-label">
+              <i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>
+              <span>Tools</span>
+            </div>
+            <div class="skill-chips-wrap">
+              <span class="skill-chip"><i class="devicon-git-plain colored" aria-hidden="true"></i>Git &amp; GitHub</span>
+              <span class="skill-chip"><i class="devicon-vscode-plain colored" aria-hidden="true"></i>VS Code</span>
+              <span class="skill-chip"><i class="devicon-figma-plain colored" aria-hidden="true"></i>Figma</span>
+              <span class="skill-chip"><i class="devicon-docker-plain colored" aria-hidden="true"></i>Docker</span>
+            </div>
+          </div>
+
+          <!-- Services -->
+          <div class="skill-group skill-group--full">
+            <div class="skill-group-label">
+              <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+              <span>Services</span>
+            </div>
+            <div class="skill-chips-wrap">
+              <span class="skill-chip"><i class="fa-solid fa-code icon-glow-gold" aria-hidden="true"></i>Web Development</span>
+              <span class="skill-chip"><i class="fa-solid fa-palette icon-glow-pink" aria-hidden="true"></i>Web Design</span>
+              <span class="skill-chip"><i class="fa-solid fa-diagram-project icon-glow-gold" aria-hidden="true"></i>Scalable System Design</span>
+              <span class="skill-chip"><i class="fa-solid fa-envelope-open-text icon-glow-pink" aria-hidden="true"></i>Digital Wedding Invitations</span>
+              <span class="skill-chip"><i class="fa-solid fa-id-card icon-glow-gold" aria-hidden="true"></i>Online Portfolios</span>
+              <span class="skill-chip"><i class="fa-solid fa-wifi icon-glow-pink" aria-hidden="true"></i>WiFi &amp; Ad Platforms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Animated Skill Proficiency Rings & Progress Bars -->
+      <div class="proficiency-row" aria-label="Skill proficiency levels">
+        <div class="ring-stat" data-percent="95">
+          <div class="ring-svg-wrap">
+            <svg class="ring-svg" viewBox="0 0 60 60" aria-hidden="true">
+              <circle class="ring-track" cx="30" cy="30" r="24" />
+              <circle class="ring-fill" cx="30" cy="30" r="24" stroke="#22C55E" />
+            </svg>
+            <span class="ring-pct">0%</span>
+          </div>
+          <span class="ring-label">Frontend &amp; UI</span>
+          <div class="skill-bar-mini"><div class="skill-bar-fill"></div></div>
+        </div>
+
+        <div class="ring-stat" data-percent="90">
+          <div class="ring-svg-wrap">
+            <svg class="ring-svg" viewBox="0 0 60 60" aria-hidden="true">
+              <circle class="ring-track" cx="30" cy="30" r="24" />
+              <circle class="ring-fill" cx="30" cy="30" r="24" stroke="#FACC15" />
+            </svg>
+            <span class="ring-pct">0%</span>
+          </div>
+          <span class="ring-label">Backend &amp; APIs</span>
+          <div class="skill-bar-mini"><div class="skill-bar-fill"></div></div>
+        </div>
+
+        <div class="ring-stat" data-percent="92">
+          <div class="ring-svg-wrap">
+            <svg class="ring-svg" viewBox="0 0 60 60" aria-hidden="true">
+              <circle class="ring-track" cx="30" cy="30" r="24" />
+              <circle class="ring-fill" cx="30" cy="30" r="24" stroke="#EC4899" />
+            </svg>
+            <span class="ring-pct">0%</span>
+          </div>
+          <span class="ring-label">Web Design</span>
+          <div class="skill-bar-mini"><div class="skill-bar-fill"></div></div>
+        </div>
+
+        <div class="ring-stat" data-percent="88">
+          <div class="ring-svg-wrap">
+            <svg class="ring-svg" viewBox="0 0 60 60" aria-hidden="true">
+              <circle class="ring-track" cx="30" cy="30" r="24" />
+              <circle class="ring-fill" cx="30" cy="30" r="24" stroke="#60A5FA" />
+            </svg>
+            <span class="ring-pct">0%</span>
+          </div>
+          <span class="ring-label">Systems &amp; Cloud</span>
+          <div class="skill-bar-mini"><div class="skill-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <!-- Contact Details & Pulsing CTA -->
+      <footer class="contact-cta-card tilt-card" aria-label="Developer Contact Information">
+        <div class="contact-details-grid">
+          <a id="phone-call-link" href="tel:[YOUR PHONE NUMBER]" class="contact-link" aria-label="Call developer phone number">
+            <i class="fa-solid fa-phone icon-bounce-phone" aria-hidden="true"></i>
+            <span>[YOUR PHONE NUMBER]</span>
+          </a>
+
+          <a id="email-link" href="mailto:[YOUR EMAIL]" class="contact-link" aria-label="Email developer">
+            <i class="fa-solid fa-envelope icon-glow-gold" aria-hidden="true"></i>
+            <span>[YOUR EMAIL]</span>
+          </a>
+
+          <div class="contact-link" aria-label="Developer location">
+            <i class="fa-solid fa-map-pin icon-glow-pink" aria-hidden="true"></i>
+            <span>[YOUR LOCATION / TOWN, COUNTRY]</span>
+          </div>
+
+          <a id="whatsapp-inline-link" href="https://wa.me/[YOUR_WHATSAPP_DIGITS]" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Message developer on WhatsApp">
+            <i class="fa-brands fa-whatsapp icon-bounce-wa" aria-hidden="true"></i>
+            <span>WhatsApp: [YOUR PHONE NUMBER]</span>
+          </a>
+        </div>
+
+        <div class="social-and-cta">
+          <div class="social-links-row" aria-label="Portfolio and Social Profiles">
+            <a href="[YOUR PORTFOLIO URL]" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="Portfolio Website" aria-label="Portfolio Website">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </a>
+            <a href="[YOUR GITHUB URL]" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="GitHub Profile" aria-label="GitHub Profile">
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
+            </a>
+            <a href="[YOUR LINKEDIN URL]" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="LinkedIn Profile" aria-label="LinkedIn Profile">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <div class="cta-buttons-row">
+            <a id="cta-whatsapp-btn" href="https://wa.me/[YOUR_WHATSAPP_DIGITS]?text=Hi!%20I%20saw%20the%20Brenda%20%26%20Chalton%20wedding%20banner%20and%20would%20love%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="cta-primary-btn">
+              <i class="fa-brands fa-whatsapp icon-bounce-wa" style="color: #052E16;" aria-hidden="true"></i>
+              <span>Chat on WhatsApp</span>
+            </a>
+            <a href="mailto:[YOUR EMAIL]?subject=Project%20Inquiry" class="cta-secondary-btn">
+              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+              <span>Hire Me</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Non-intrusive Toast Notification -->
+  <div id="toast-banner" class="toast-banner" role="status" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       VANILLA JAVASCRIPT: ANIMATIONS, COUNTDOWN, UPLOAD, EXPORT & PARTICLES
+       ========================================================================= -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* -----------------------------------------------------------------------
+         CONFIGURATION: REPLACE THIS PLACEHOLDER WITH YOUR ACTUAL DATE & TIME
+         Example ISO 8601 format: "2026-12-20T14:00:00"
+         ----------------------------------------------------------------------- */
+      const WEDDING_DATE_TIME = "[WEDDING DATE AND TIME]";
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isMobileViewport = () => window.innerWidth < 768;
+
+      /* -----------------------------------------------------------------------
+         TOAST NOTIFICATION HELPER
+         ----------------------------------------------------------------------- */
+      const toastEl = document.getElementById('toast-banner');
+      let toastTimer = null;
+      function showToast(message) {
+        if (!toastEl) return;
+        toastEl.textContent = message;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 3200);
+      }
+
+      /* -----------------------------------------------------------------------
+         1. LETTER-BY-LETTER NAME REVEAL & SHIMMER SWEEP
+         ----------------------------------------------------------------------- */
+      document.querySelectorAll('[data-animate-name]').forEach((wordEl, wordIndex) => {
+        const nameText = wordEl.getAttribute('data-animate-name') || wordEl.textContent || '';
+        wordEl.textContent = '';
+        const baseDelay = wordIndex * 0.35;
+
+        [...nameText].forEach((char, idx) => {
+          const span = document.createElement('span');
+          span.className = 'couple-name-letter';
+          span.textContent = char === ' ' ? '\u00A0' : char;
+          span.style.animationDelay = `${(baseDelay + idx * 0.06).toFixed(2)}s, ${(idx * 0.12).toFixed(2)}s`;
+          wordEl.appendChild(span);
+        });
+      });
+
+      /* -----------------------------------------------------------------------
+         2. LIVE COUNTDOWN TIMER WITH FLIP / BOUNCE ON DIGIT CHANGE
+         ----------------------------------------------------------------------- */
+      const cdDays = document.getElementById('cd-days');
+      const cdHours = document.getElementById('cd-hours');
+      const cdMinutes = document.getElementById('cd-minutes');
+      const cdSeconds = document.getElementById('cd-seconds');
+      const countdownNote = document.getElementById('countdown-status-note');
+
+      function resolveTargetDate() {
+        const parsed = Date.parse(WEDDING_DATE_TIME);
+        if (!Number.isNaN(parsed)) {
+          return { timestamp: parsed, isDemo: false };
+        }
+        // Fallback demo date (+45 days) so timer actively ticks until placeholder is replaced
+        const demo = new Date();
+        demo.setDate(demo.getDate() + 45);
+        demo.setHours(14, 0, 0, 0);
+        return { timestamp: demo.getTime(), isDemo: true };
+      }
+
+      const targetInfo = resolveTargetDate();
+      if (countdownNote) {
+        countdownNote.textContent = targetInfo.isDemo
+          ? 'Preview Timer (Set [WEDDING DATE AND TIME])'
+          : `Ceremony: ${new Date(targetInfo.timestamp).toLocaleDateString(undefined, { dateStyle: 'medium' })}`;
+      }
+
+      const prevDigits = { d: '', h: '', m: '', s: '' };
+      function updateDigit(el, key, value) {
+        if (!el) return;
+        const formatted = String(value).padStart(2, '0');
+        if (prevDigits[key] !== formatted) {
+          el.textContent = formatted;
+          if (!prefersReducedMotion && prevDigits[key] !== '') {
+            el.classList.remove('digit-tick');
+            void el.offsetWidth; // trigger reflow for smooth restart
+            el.classList.add('digit-tick');
+          }
+          prevDigits[key] = formatted;
+        }
+      }
+
+      function tickCountdown() {
+        const diff = Math.max(0, targetInfo.timestamp - Date.now());
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        updateDigit(cdDays, 'd', days);
+        updateDigit(cdHours, 'h', hours);
+        updateDigit(cdMinutes, 'm', minutes);
+        updateDigit(cdSeconds, 's', seconds);
+      }
+
+      tickCountdown();
+      setInterval(tickCountdown, 1000);
+
+      /* -----------------------------------------------------------------------
+         3. COUPLE PORTRAIT UPLOAD & LOCAL PERSISTENCE
+         ----------------------------------------------------------------------- */
+      const photoInput = document.getElementById('couple-photo-input');
+      const portraitImg = document.getElementById('couple-portrait-img');
+      const resetPhotoBtn = document.getElementById('reset-photo-btn');
+      const defaultPortraitSrc = portraitImg ? portraitImg.src : '';
+      const STORAGE_KEY = 'brenda_chalton_portrait_data_v1';
+
+      try {
+        const savedPhoto = localStorage.getItem(STORAGE_KEY);
+        if (savedPhoto && portraitImg) {
+          portraitImg.src = savedPhoto;
+          resetPhotoBtn?.classList.add('visible');
+        }
+      } catch (_) {
+        // Ignore storage errors in restricted browsing modes
+      }
+
+      photoInput?.addEventListener('change', (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+          showToast('Please select a valid image file (JPG, PNG, WebP).');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target?.result;
+          if (typeof dataUrl === 'string' && portraitImg) {
+            portraitImg.src = dataUrl;
+            resetPhotoBtn?.classList.add('visible');
+            try {
+              localStorage.setItem(STORAGE_KEY, dataUrl);
+            } catch (_) {
+              // File too large for localStorage quota; still displays cleanly in session
+            }
+            showToast('Couple portrait updated!');
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+
+      resetPhotoBtn?.addEventListener('click', () => {
+        if (portraitImg) portraitImg.src = defaultPortraitSrc;
+        resetPhotoBtn.classList.remove('visible');
+        if (photoInput) photoInput.value = '';
+        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+        showToast('Restored default portrait.');
+      });
+
+      /* -----------------------------------------------------------------------
+         4. DEVELOPER ROLE TYPING EFFECT
+         ----------------------------------------------------------------------- */
+      const roles = ['Software Developer', 'Web Designer', 'Problem Solver'];
+      const typedEl = document.getElementById('typed-role-text');
+
+      if (typedEl && !prefersReducedMotion) {
+        let roleIndex = 0;
+        let charIndex = roles[0].length;
+        let isDeleting = true;
+
+        function runTypingLoop() {
+          const currentRole = roles[roleIndex];
+          if (isDeleting) {
+            charIndex = Math.max(0, charIndex - 1);
+            typedEl.textContent = currentRole.slice(0, charIndex);
+            if (charIndex === 0) {
+              isDeleting = false;
+              roleIndex = (roleIndex + 1) % roles.length;
+              setTimeout(runTypingLoop, 320);
+              return;
+            }
+            setTimeout(runTypingLoop, 42);
+          } else {
+            charIndex = Math.min(currentRole.length, charIndex + 1);
+            typedEl.textContent = currentRole.slice(0, charIndex);
+            if (charIndex === currentRole.length) {
+              isDeleting = true;
+              setTimeout(runTypingLoop, 2000);
+              return;
+            }
+            setTimeout(runTypingLoop, 72);
+          }
+        }
+        setTimeout(runTypingLoop, 1800);
+      }
+
+      /* -----------------------------------------------------------------------
+         5. STAGGERED SKILL CHIP REVEAL & PROGRESS RINGS / BARS ON VIEW
+         ----------------------------------------------------------------------- */
+      const skillChips = document.querySelectorAll('.skill-chip');
+      const ringStats = document.querySelectorAll('.ring-stat');
+
+      function revealSkillsAndRings() {
+        skillChips.forEach((chip, idx) => {
+          if (prefersReducedMotion) {
+            chip.classList.add('is-visible');
+          } else {
+            chip.style.animationDelay = `${Math.min(idx * 0.035, 0.9).toFixed(2)}s`;
+            chip.classList.add('is-visible');
+          }
+        });
+
+        const circumference = 2 * Math.PI * 24; // r = 24 -> ~150.8
+        ringStats.forEach((stat) => {
+          const targetPct = Number(stat.getAttribute('data-percent') || 0);
+          const ringFill = stat.querySelector('.ring-fill');
+          const pctLabel = stat.querySelector('.ring-pct');
+          const barFill = stat.querySelector('.skill-bar-fill');
+
+          if (ringFill) {
+            const offset = circumference - (targetPct / 100) * circumference;
+            ringFill.style.strokeDashoffset = String(offset);
+          }
+          if (barFill) {
+            barFill.style.transform = `scaleX(${targetPct / 100})`;
+          }
+          if (pctLabel) {
+            if (prefersReducedMotion) {
+              pctLabel.textContent = `${targetPct}%`;
+            } else {
+              let current = 0;
+              const stepTime = 16;
+              const totalSteps = 45;
+              const increment = targetPct / totalSteps;
+              const counter = setInterval(() => {
+                current += increment;
+                if (current >= targetPct) {
+                  pctLabel.textContent = `${targetPct}%`;
+                  clearInterval(counter);
+                } else {
+                  pctLabel.textContent = `${Math.round(current)}%`;
+                }
+              }, stepTime);
+            }
+          }
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        let triggered = false;
+        const devZone = document.querySelector('.developer-zone');
+        const observer = new IntersectionObserver((entries) => {
+          if (triggered) return;
+          if (entries.some((entry) => entry.isIntersecting)) {
+            triggered = true;
+            revealSkillsAndRings();
+            observer.disconnect();
+          }
+        }, { threshold: 0.12 });
+
+        if (devZone) observer.observe(devZone);
+      } else {
+        revealSkillsAndRings();
+      }
+
+      /* -----------------------------------------------------------------------
+         6. SUBTLE 3D PARALLAX TILT ON GLASS CARDS (DESKTOP ONLY)
+         ----------------------------------------------------------------------- */
+      if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.tilt-card').forEach((card) => {
+          card.addEventListener('pointermove', (e) => {
+            if (isMobileViewport()) return;
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `perspective(900px) rotateX(${(-y * 3.5).toFixed(2)}deg) rotateY(${(x * 3.5).toFixed(2)}deg)`;
+          });
+
+          card.addEventListener('pointerleave', () => {
+            card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+          });
+        });
+      }
+
+      /* -----------------------------------------------------------------------
+         7. CELEBRATION CANVAS PARTICLES (HEARTS, SPARKLES, PETALS, STARS, CONFETTI)
+         ----------------------------------------------------------------------- */
+      const canvas = document.getElementById('celebration-canvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+
+      if (canvas && ctx && !prefersReducedMotion) {
+        let width = 0;
+        let height = 0;
+        let particles = [];
+        let animId = null;
+
+        const palette = ['#EC4899', '#FACC15', '#FFFFFF', '#F9A8D4', '#FEF08A'];
+
+        function resizeCanvas() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          width = window.innerWidth;
+          height = window.innerHeight;
+          canvas.width = width * dpr;
+          canvas.height = height * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function createParticle(randomY = false) {
+          const types = ['heart', 'sparkle', 'confetti', 'petal', 'star'];
+          const type = types[Math.floor(Math.random() * types.length)];
+          const isFalling = type === 'petal';
+          return {
+            type,
+            x: Math.random() * width,
+            y: randomY ? Math.random() * height : (isFalling ? -20 : height + 20),
+            vx: (Math.random() - 0.5) * 0.55,
+            vy: isFalling ? (0.45 + Math.random() * 0.75) : -(0.35 + Math.random() * 0.8),
+            size: type === 'star' ? (2 + Math.random() * 2.5) : (5 + Math.random() * 7),
+            rotation: Math.random() * Math.PI * 2,
+            vr: (Math.random() - 0.5) * 0.025,
+            alpha: 0.35 + Math.random() * 0.55,
+            twinklePhase: Math.random() * Math.PI * 2,
+            color: palette[Math.floor(Math.random() * palette.length)]
+          };
+        }
+
+        function initParticles() {
+          resizeCanvas();
+          const count = isMobileViewport() ? 22 : 52;
+          particles = Array.from({ length: count }, () => createParticle(true));
+        }
+
+        function drawHeart(x, y, size) {
+          ctx.beginPath();
+          const s = size * 0.55;
+          ctx.moveTo(x, y + s * 0.35);
+          ctx.bezierCurveTo(x - s, y - s * 0.45, x - s * 1.4, y + s * 0.55, x, y + s * 1.35);
+          ctx.bezierCurveTo(x + s * 1.4, y + s * 0.55, x + s, y - s * 0.45, x, y + s * 0.35);
+          ctx.fill();
+        }
+
+        function drawSparkle(x, y, size) {
+          ctx.beginPath();
+          for (let i = 0; i < 4; i++) {
+            const angle = (i * Math.PI) / 2;
+            const px = x + Math.cos(angle) * size;
+            const py = y + Math.sin(angle) * size;
+            ctx.lineTo(px, py);
+            const midAngle = angle + Math.PI / 4;
+            ctx.lineTo(x + Math.cos(midAngle) * (size * 0.28), y + Math.sin(midAngle) * (size * 0.28));
+          }
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        function renderParticles() {
+          ctx.clearRect(0, 0, width, height);
+
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx + Math.sin(p.twinklePhase) * 0.18;
+            p.y += p.vy;
+            p.rotation += p.vr;
+            p.twinklePhase += 0.03;
+
+            const twinkleAlpha = p.type === 'star' || p.type === 'sparkle'
+              ? p.alpha * (0.55 + 0.45 * Math.sin(p.twinklePhase))
+              : p.alpha;
+
+            ctx.save();
+            ctx.globalAlpha = Math.max(0.1, twinkleAlpha);
+            ctx.fillStyle = p.color;
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+
+            if (p.type === 'heart') {
+              drawHeart(0, -p.size * 0.4, p.size);
+            } else if (p.type === 'sparkle') {
+              drawSparkle(0, 0, p.size * 0.85);
+            } else if (p.type === 'petal') {
+              ctx.beginPath();
+              ctx.ellipse(0, 0, p.size * 0.72, p.size * 0.38, 0, 0, Math.PI * 2);
+              ctx.fill();
+            } else if (p.type === 'confetti') {
+              ctx.fillRect(-p.size * 0.45, -p.size * 0.22, p.size * 0.9, p.size * 0.44);
+            } else {
+              ctx.beginPath();
+              ctx.arc(0, 0, p.size * 0.55, 0, Math.PI * 2);
+              ctx.fill();
+            }
+
+            ctx.restore();
+
+            if (p.y < -35 || p.y > height + 35 || p.x < -35 || p.x > width + 35) {
+              particles[i] = createParticle(false);
+            }
+          }
+
+          animId = requestAnimationFrame(renderParticles);
+        }
+
+        initParticles();
+        renderParticles();
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(initParticles, 180);
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden && animId) {
+            cancelAnimationFrame(animId);
+            animId = null;
+          } else if (!document.hidden && !animId) {
+            renderParticles();
+          }
+        });
+      }
+
+      /* -----------------------------------------------------------------------
+         8. DOWNLOAD AS IMAGE (html2canvas) & SHARE HANDLERS
+         ----------------------------------------------------------------------- */
+      const downloadBtn = document.getElementById('download-banner-btn');
+      const shareBtn = document.getElementById('share-banner-btn');
+      const bannerStage = document.getElementById('wedding-banner-stage');
+
+      downloadBtn?.addEventListener('click', async () => {
+        if (!bannerStage || typeof window.html2canvas !== 'function') {
+          showToast('Image exporter is still loading. Please try again in a moment.');
+          return;
+        }
+
+        const originalHTML = downloadBtn.innerHTML;
+        downloadBtn.disabled = true;
+        downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i><span>Rendering PNG...</span>';
+
+        try {
+          bannerStage.classList.add('exporting-snapshot');
+          const canvasSnapshot = await window.html2canvas(bannerStage, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#1E3A8A',
+            logging: false
+          });
+          bannerStage.classList.remove('exporting-snapshot');
+
+          const link = document.createElement('a');
+          link.download = 'brenda-chalton-wedding-banner.png';
+          link.href = canvasSnapshot.toDataURL('image/png');
+          link.click();
+          showToast('Banner downloaded as PNG!');
+        } catch (err) {
+          bannerStage.classList.remove('exporting-snapshot');
+          showToast('Could not generate image. Please try again.');
+        } finally {
+          downloadBtn.disabled = false;
+          downloadBtn.innerHTML = originalHTML;
+        }
+      });
+
+      shareBtn?.addEventListener('click', async () => {
+        const shareData = {
+          title: 'Brenda & Chalton — Wedding Ceremony Announcement',
+          text: 'Together with their families, Brenda & Chalton invite you to celebrate their Wedding Ceremony!',
+          url: window.location.href
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            return;
+          } catch (err) {
+            if (err && err.name === 'AbortError') return;
+          }
+        }
+
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          showToast('Invitation link copied to clipboard!');
+        } catch (_) {
+          showToast('Copy the page URL from your browser address bar to share.');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

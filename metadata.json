@@ -1,0 +1,6 @@
+{
+  "name": "Brenda & Chalton — Wedding Announcement & Developer Showcase",
+  "description": "Single-page, fully responsive, animated wedding ceremony announcement banner for Brenda & Chalton paired with a software developer portfolio showcase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
